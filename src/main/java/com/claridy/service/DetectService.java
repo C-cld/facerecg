@@ -1,5 +1,6 @@
 package com.claridy.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,9 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.claridy.dao.DetectLogDao;
 import com.claridy.dao.UserDao;
+import com.claridy.domain.DetectLog;
 import com.claridy.domain.User;
 import com.claridy.utils.AuthUtils;
 import com.claridy.utils.GsonUtils;
@@ -18,11 +21,19 @@ import com.claridy.utils.HttpUtil;
 public class DetectService {
 	
 	private UserDao userDao;
+	private DetectLogDao detectLogDao;
 	
 	@Autowired
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
+	
+	@Autowired
+	public void setDetectLogDao(DetectLogDao detectLogDao) {
+		this.detectLogDao = detectLogDao;
+	}
+	
+	
 	/**
 	 * 检测人脸详细属性，目前只返回颜值
 	 */
@@ -68,8 +79,8 @@ public class DetectService {
             //匹配的用户列表
             JSONArray ja = r_result.getJSONArray("user_list");
             int userId = ja.getJSONObject(0).getInt("user_id");
-            Double score = ja.getJSONObject(0).getDouble("score");
             //相似度大于80则认为匹配
+            Double score = ja.getJSONObject(0).getDouble("score");
             int retval = score.compareTo(80.0);
             if (retval >= 0) {
             	return userId;
@@ -85,6 +96,8 @@ public class DetectService {
 	public User findUser(String base64Img) {
 		int userId = findUserIdInFaceSet(base64Img);
 		String beauty = detectFaceDetail(base64Img);
+		//扫描记录放到log中
+		insertDetectLog(userId);
 		if (userId != 0 && beauty !=null) {
 			User user = userDao.findUserById(userId);
 			user.setBeauty(beauty);
@@ -96,5 +109,12 @@ public class DetectService {
 		} else {
 			return null;
 		}
+	}
+	
+	public void insertDetectLog(int userId) {
+        DetectLog detectLog = new DetectLog();
+        detectLog.setUserId(userId);
+        detectLog.setDetectDate(new Date());
+        detectLogDao.insertDetectLog(detectLog);
 	}
 }
