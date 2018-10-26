@@ -13,14 +13,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.claridy.domain.User;
 import com.claridy.service.DetectService;
+import com.claridy.service.RegisterService;
 
 @RestController
 public class MainController {
 	private DetectService detectService;
+	private RegisterService registerService;
 
 	@Autowired
 	public void setDetectService(DetectService detectService) {
 		this.detectService = detectService;
+	}
+	
+	@Autowired
+	public void setRegisterService(RegisterService registerService) {
+		this.registerService = registerService;
 	}
 
 	@RequestMapping(value = "/facerecg")
@@ -32,6 +39,11 @@ public class MainController {
 	public ModelAndView faceDetectPage() {
 		return new ModelAndView("faceDetect");
 	}
+	
+	@RequestMapping(value = "/facerecg/faceRegister")
+	public ModelAndView faceRegister() {
+		return new ModelAndView("faceRegister", "errorMsg", "请保持最帅。");
+	}
 
 	/**
 	 * @author caiyunye
@@ -41,8 +53,8 @@ public class MainController {
 	@RequestMapping(value = "/facerecg/detect",method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> faceDetect(HttpServletRequest request) {
-		String data = request.getParameter("imgValue");
-		User user = detectService.findUser(data);
+		String base64Img = request.getParameter("imgValue");
+		User user = detectService.findUser(base64Img);
 		if (user != null) {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("user", user);
@@ -52,5 +64,21 @@ public class MainController {
 		}
 	}
 	
+	/**
+	 * @author caiyunye
+	 * @Data 2018/10/25
+	 * 注册人脸至人脸库
+	 */
+	@RequestMapping(value = "/facerecg/register")
+	public ModelAndView faceRegister(HttpServletRequest request, User user) {
+		String base64Img = request.getParameter("imgValue");
+		Boolean flag = registerService.register(base64Img, user);
+		if (flag) {
+			return new ModelAndView("faceRegister","errorMsg","注册成功。");
+		} else {
+			return new ModelAndView("faceRegister","errorMsg","注册失败。");
+		}
+		
+	}
 	
 }

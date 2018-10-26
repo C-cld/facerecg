@@ -23,7 +23,7 @@ public class DetectService {
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
-	/*
+	/**
 	 * 检测人脸详细属性，目前只返回颜值
 	 */
 	public String detectFaceDetail(String base64Img) {
@@ -48,10 +48,10 @@ public class DetectService {
 		}
 	}
 	
-	/*
+	/**
 	 * 在人脸库中查找人脸
 	 */
-	public String findUserIdInFaceSet(String base64Img) {
+	public int findUserIdInFaceSet(String base64Img) {
 		String url = "https://aip.baidubce.com/rest/2.0/face/v3/search";
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -67,29 +67,29 @@ public class DetectService {
             JSONObject r_result = jsonObject.getJSONObject("result");
             //匹配的用户列表
             JSONArray ja = r_result.getJSONArray("user_list");
-            String userId = ja.getJSONObject(0).getString("user_id");
+            int userId = ja.getJSONObject(0).getInt("user_id");
             Double score = ja.getJSONObject(0).getDouble("score");
             //相似度大于80则认为匹配
             int retval = score.compareTo(80.0);
             if (retval >= 0) {
             	return userId;
             } else {
-            	return null;
+            	return 0;
             }
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return 0;
 		}
 	}
 	
 	public User findUser(String base64Img) {
-		String userId = findUserIdInFaceSet(base64Img);
+		int userId = findUserIdInFaceSet(base64Img);
 		String beauty = detectFaceDetail(base64Img);
-		if (userId != null && beauty !=null) {
+		if (userId != 0 && beauty !=null) {
 			User user = userDao.findUserById(userId);
 			user.setBeauty(beauty);
 			return user;
-		} else if (userId == null && beauty != null) {//检测到人脸但是不在人脸库中
+		} else if (userId == 0 && beauty != null) {//检测到人脸但是不在人脸库中
 			User user = new User();
 			user.setBeauty(beauty);
 			return user;

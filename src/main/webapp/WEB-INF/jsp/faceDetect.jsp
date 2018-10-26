@@ -122,30 +122,22 @@ table {
 					dataType : "json",
 					data : $("#detect").serialize(),
 					success : function(data) {
-						if (data) {
-							if (data.user.username) {
-								document.getElementById("errorMsg").text = "";
-								document.getElementById("username").text = data.user.username;
-								if (data.user.sex == 1) {
-									document.getElementById("sex").text = "男";
-								} else {
-									document.getElementById("sex").text = "女";
-								}
-									document.getElementById("age").text = data.user.age;
-									document.getElementById("beauty").text = data.user.beauty;
-								} else {//检测到人脸但是不在人脸库中
-									document.getElementById("username").text = "";
-									document.getElementById("sex").text = "";
-									document.getElementById("age").text = "";
-									document.getElementById("beauty").text = data.user.beauty;
-									document.getElementById("errorMsg").text = "人脸不在人脸库中。";
-								}
+						if (data.user.username) {
+							document.getElementById("errorMsg").text = "";
+							document.getElementById("username").text = data.user.username;
+							if (data.user.sex == 1) {
+								document.getElementById("sex").text = "男";
 							} else {
+								document.getElementById("sex").text = "女";
+							}
+								document.getElementById("age").text = data.user.age;
+								document.getElementById("beauty").text = data.user.beauty;
+							} else {//检测到人脸但是不在人脸库中
 								document.getElementById("username").text = "";
 								document.getElementById("sex").text = "";
 								document.getElementById("age").text = "";
-								document.getElementById("beauty").text = "";
-								document.getElementById("errorMsg").text = "检测不到人脸。";
+								document.getElementById("beauty").text = data.user.beauty;
+								document.getElementById("errorMsg").text = "人脸未注册。";
 							}
 						},
 					error : function(response) {

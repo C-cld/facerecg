@@ -29,7 +29,7 @@ a {
 			<td><a href="/facerecg/faceRegister">人脸注册</a></td>
 		</tr>
 		<tr>
-			<td><a href="/facerecg/faceDetect">人脸检测</a></td>
+			<td><a href="/facerecg/faceDetect">人脸识别</a></td>
 		</tr>
 		
 	</table>
