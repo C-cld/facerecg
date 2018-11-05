@@ -95,7 +95,8 @@ public class DetectService {
 	
 	public User findUser(String base64Img) {
 		int userId = findUserIdInFaceSet(base64Img);
-		String beauty = detectFaceDetail(base64Img);
+		//String beauty = detectFaceDetail(base64Img);
+		String beauty = "0";
 		//扫描记录放到log中
 		insertDetectLog(userId);
 		if (userId != 0 && beauty !=null) {
@@ -111,6 +112,10 @@ public class DetectService {
 		}
 	}
 	
+	/**
+	 * 每扫描一次都添加日志记录
+	 * @param userId
+	 */
 	public void insertDetectLog(int userId) {
         DetectLog detectLog = new DetectLog();
         detectLog.setUserId(userId);
