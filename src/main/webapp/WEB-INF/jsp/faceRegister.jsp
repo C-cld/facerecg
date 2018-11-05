@@ -146,7 +146,7 @@ table {
 </script>
 </head>
 <body>
-	<form action="/facerecg/register" id="register" method="post" onsubmit="return mycheck()">
+	<form action="faceRegister/register" id="register" method="post" onsubmit="return mycheck()">
 		<div class="main">
 			<video id="video" width="500" height="375" autoplay></video>
 			<table>

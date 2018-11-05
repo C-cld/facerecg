@@ -26,10 +26,10 @@ a {
 <body>
 	<table>
 		<tr>
-			<td><a href="/facerecg/faceRegister">人脸注册</a></td>
+			<td><a href="faceRegister">人脸注册</a></td>
 		</tr>
 		<tr>
-			<td><a href="/facerecg/faceDetect">人脸识别</a></td>
+			<td><a href="faceDetect">人脸识别</a></td>
 		</tr>
 		
 	</table>

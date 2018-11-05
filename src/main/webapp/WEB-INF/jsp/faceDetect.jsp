@@ -35,7 +35,7 @@ table {
 </style>
 </head>
 <body>
-	<form action="/facerecg/detect" id="detect">
+	<form action="faceDetect/detect" id="detect">
 		<div class="main">
 			<video id="video" width="500" height="375" autoplay></video>
 			<table>
@@ -107,7 +107,7 @@ table {
 						if (temp) {
 							uploadImg(imgData);	
 							temp = false;
-							setTimeout(function () {temp = true;},3000);
+							setTimeout(function () {temp = true;},2000);
 						}
 						
 						
@@ -117,7 +117,7 @@ table {
 			
 			function uploadImg(imgData) {
 				$.ajax({
-					url : "/facerecg/detect",
+					url : "faceDetect/detect",
 					type : "post",
 					dataType : "json",
 					data : $("#detect").serialize(),
@@ -143,7 +143,6 @@ table {
 					error : function(response) {
 					}
 				});
-				console.log("===");
 			}
 			
 			function sleep(numberMillis) {
