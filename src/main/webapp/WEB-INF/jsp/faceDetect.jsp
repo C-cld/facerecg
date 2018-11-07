@@ -121,7 +121,12 @@ table {
 					dataType : "json",
 					data : $("#detect").serialize(),
 					success : function(data) {
-						if (data.user.username) {
+						if (data == null) {
+							document.getElementById("username").text = "";
+							document.getElementById("sex").text = "";
+							document.getElementById("age").text = "";
+							document.getElementById("errorMsg").text = "识别失败。";
+						} else if (data.user.username) {
 							document.getElementById("errorMsg").text = "";
 							document.getElementById("username").text = data.user.username;
 							if (data.user.sex == 1) {
@@ -130,12 +135,18 @@ table {
 								document.getElementById("sex").text = "女";
 							}
 							document.getElementById("age").text = data.user.age;
-						} else {//检测到人脸但是不在人脸库中或者检测失败
+						} else {
 							document.getElementById("username").text = "";
 							document.getElementById("sex").text = "";
 							document.getElementById("age").text = "";
 							document.getElementById("errorMsg").text = "人脸未注册。";
 						}
+						
+						setTimeout(function () {
+							document.getElementById("username").text = "";
+							document.getElementById("sex").text = "";
+							document.getElementById("age").text = "";
+							document.getElementById("errorMsg").text = "";},5000);
 					},
 					error : function(response) {
 					}
