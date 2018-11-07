@@ -51,8 +51,8 @@ table {
 					<td><a id="age"></a></td>
 				</tr>
 				<tr>
-					<td id="title">颜值：</td>
-					<td><a id="beauty"></a></td>
+					<td id="title">占坑：</td>
+					<td></td>
 				</tr>
 				<tr>
 					<td id="title">占坑：</td>
@@ -130,12 +130,10 @@ table {
 								document.getElementById("sex").text = "女";
 							}
 							document.getElementById("age").text = data.user.age;
-							document.getElementById("beauty").text = data.user.beauty;
-						} else {//检测到人脸但是不在人脸库中
+						} else {//检测到人脸但是不在人脸库中或者检测失败
 							document.getElementById("username").text = "";
 							document.getElementById("sex").text = "";
 							document.getElementById("age").text = "";
-							document.getElementById("beauty").text = data.user.beauty;
 							document.getElementById("errorMsg").text = "人脸未注册。";
 						}
 					},
