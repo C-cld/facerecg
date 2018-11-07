@@ -49,8 +49,7 @@ public class DetectService {
             String accessToken = AuthUtils.getAuth();
             String result = HttpUtil.post(url, accessToken, "application/json", param);
             JSONObject jsonObject = new JSONObject(result);
-            if (jsonObject.getInt("error_code") != 0) {
-            	//识别失败
+            if (jsonObject.getInt("error_code") != 0) {//识别失败
             	return null;
             } else {
             	JSONObject r_result = jsonObject.getJSONObject("result");
@@ -76,7 +75,6 @@ public class DetectService {
 		String userId = findUserIdInFaceSet(base64Img);
 		//扫描记录放到log中
 		insertDetectLog(userId);
-
 		if (userId == null) { //没有检测到人脸
 			return null;
 		} else if (userId.equals("0")) { //检测到人脸但是不在人脸库

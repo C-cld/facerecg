@@ -16,11 +16,13 @@ public class AuthUtils {
 	private static String authDate;
 	private static String access_token;
 
+	/**
+	 * 每隔30天获取一次access_token, 这里的写法将来要优化
+	 * @return
+	 */
 	public static String getAuth() {
 		try {
 			if (authDate != null) {
-				//SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss z");
-				//Date authDay = sdf.parse(authDate);
 				Date authDay = new Date(authDate);
 				Date today = new Date();
 				//当前日期超过token获取日期30天
@@ -28,8 +30,7 @@ public class AuthUtils {
 					String clientId = "lK9XD2kZ28L0EvzRgtauOECM";
 					String clientSecret = "XdFc1WRX0DQRvIyuorj5TQB0CPtINgsG";
 					String authHost = "https://aip.baidubce.com/oauth/2.0/token?";
-					String getAccessTokenUrl = authHost + "grant_type=client_credentials" + "&client_id=" + clientId
-							+ "&client_secret=" + clientSecret;
+					String getAccessTokenUrl = authHost + "grant_type=client_credentials" + "&client_id=" + clientId+ "&client_secret=" + clientSecret;
 
 					URL realUrl = new URL(getAccessTokenUrl);
 					// 打开连接
@@ -61,8 +62,7 @@ public class AuthUtils {
 				String clientId = "lK9XD2kZ28L0EvzRgtauOECM";
 				String clientSecret = "XdFc1WRX0DQRvIyuorj5TQB0CPtINgsG";
 				String authHost = "https://aip.baidubce.com/oauth/2.0/token?";
-				String getAccessTokenUrl = authHost + "grant_type=client_credentials" + "&client_id=" + clientId
-						+ "&client_secret=" + clientSecret;
+				String getAccessTokenUrl = authHost + "grant_type=client_credentials" + "&client_id=" + clientId+ "&client_secret=" + clientSecret;
 
 				URL realUrl = new URL(getAccessTokenUrl);
 				// 打开连接

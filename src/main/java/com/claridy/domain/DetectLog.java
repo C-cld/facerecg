@@ -30,5 +30,4 @@ public class DetectLog {
 	public void setDetectDate(Date detectDate) {
 		this.detectDate = detectDate;
 	}
-
 }

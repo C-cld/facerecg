@@ -1,79 +1,78 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
-<head>
-<title>人脸识别</title>
-<script type="text/javascript" src="../facerecg/js/tracking-min.js"></script>
-<script type="text/javascript" src="../facerecg/js/face-min.js"></script>
-<script src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
-<style>
-.main {
-	width: 700px;
-	height: 375px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 50px;
-	font-size: 15px;
-}
-
-#video, #canvas {
-	position: absolute;
-}
-
-table {
-	float: right;
-	width: 200px;
-}
-
-#title {
-	font-size: 20px;
-	width: 60px;
-	height: 50px;
-	padding-left: 20px;
-}
-</style>
-</head>
-<body>
-	<form action="faceDetect/detect" id="detect">
-		<div class="main">
-			<video id="video" width="500" height="375" autoplay></video>
-			<table>
-				<tr>
-					<td id="title">姓名：</td>
-					<td><a id="username"></a></td>
-				</tr>
-				<tr>
-					<td id="title">性别：</td>
-					<td><a id="sex"></a></td>
-				</tr>
-				<tr>
-					<td id="title">年龄：</td>
-					<td><a id="age"></a></td>
-				</tr>
-				<tr>
-					<td id="title">占坑：</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td id="title">占坑：</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td id="title">占坑：</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="2"><font color="red" style="margin-left: 20px;"><a id="errorMsg"></a></font></td>
-				</tr>
-			</table>
-			<!-- 用于显示跟踪框 -->
-			<canvas id="canvas" width="500" height="375"></canvas>
-			<!-- 用于上传，不能用同一个是因为 drawImage会覆盖视频-->
-			<canvas id="canvas2" width="500" height="375"></canvas>
-			<input type="hidden" id="imgValue" name="imgValue" />
-		</div>
-	</form>
-	<script>
+	<head>
+		<title>人脸识别</title>
+		<script type="text/javascript" src="../facerecg/js/tracking-min.js"></script>
+		<script type="text/javascript" src="../facerecg/js/face-min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+		<style>
+			.main {
+				width: 700px;
+				height: 375px;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 50px;
+				font-size: 15px;
+			}
+			
+			#video, #canvas {
+				position: absolute;
+			}
+			
+			table {
+				float: right;
+				width: 200px;
+			}
+			
+			#title {
+				font-size: 20px;
+				width: 60px;
+				height: 50px;
+				padding-left: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<form action="faceDetect/detect" id="detect">
+			<div class="main">
+				<video id="video" width="500" height="375" autoplay></video>
+				<table>
+					<tr>
+						<td id="title">姓名：</td>
+						<td><a id="username"></a></td>
+					</tr>
+					<tr>
+						<td id="title">性别：</td>
+						<td><a id="sex"></a></td>
+					</tr>
+					<tr>
+						<td id="title">年龄：</td>
+						<td><a id="age"></a></td>
+					</tr>
+					<tr>
+						<td id="title">占坑：</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="title">占坑：</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="title">占坑：</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td colspan="2"><font color="red" style="margin-left: 20px;"><a id="errorMsg"></a></font></td>
+					</tr>
+				</table>
+				<!-- 用于显示跟踪框 -->
+				<canvas id="canvas" width="500" height="375"></canvas>
+				<!-- 用于上传，不能用同一个是因为 drawImage会覆盖视频-->
+				<canvas id="canvas2" width="500" height="375"></canvas>
+				<input type="hidden" id="imgValue" name="imgValue" />
+			</div>
+		</form>
+		<script>
 			window.onload = function() {
 				var video = document.getElementById('video');
 				var canvas = document.getElementById('canvas');
@@ -81,14 +80,14 @@ table {
 				var canvas2 = document.getElementById('canvas2');
 				var context2 = canvas2.getContext('2d');
 				var temp = true;
-				
 				var tracker = new tracking.ObjectTracker('face');
+					
 				tracker.setInitialScale(7);
 				tracker.setStepSize(2);
 				tracker.setEdgesDensity(0.1);
-				
+					
 				tracking.track('#video', tracker, { camera: true });
-				
+					
 				tracker.on('track', function(event) {
 					context.clearRect(0, 0, canvas.width, canvas.height);
 					event.data.forEach(function(rect) {
@@ -108,12 +107,10 @@ table {
 							temp = false;
 							setTimeout(function () {temp = true;},2000);
 						}
-						
-						
 					});
 				});
 			}
-			
+				
 			function uploadImg(imgData) {
 				$.ajax({
 					url : "faceDetect/detect",
@@ -141,7 +138,7 @@ table {
 							document.getElementById("age").text = "";
 							document.getElementById("errorMsg").text = "人脸未注册。";
 						}
-						
+						//定时清空识别结果
 						setTimeout(function () {
 							document.getElementById("username").text = "";
 							document.getElementById("sex").text = "";
@@ -152,17 +149,6 @@ table {
 					}
 				});
 			}
-			
-			function sleep(numberMillis) {
-				var now = new Date();
-				var exitTime = now.getTime() + numberMillis;
-				while (true) {
-					now = new Date();
-					if (now.getTime() > exitTime)
-						return;
-					}
-				}
-
 		</script>
 	</body>
 </html>

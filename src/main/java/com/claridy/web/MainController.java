@@ -79,7 +79,5 @@ public class MainController {
 		} else {
 			return new ModelAndView("faceRegister","errorMsg","注册失败。");
 		}
-		
 	}
-	
 }

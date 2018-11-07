@@ -28,14 +28,14 @@ public class UserDao {
 		String sql = " select * from user where user_id = ? ";
 		final User user = new User();
 		jdbcTemplate.query(sql, new Object[]{userId},
-                new RowCallbackHandler() {
-                    public void processRow(ResultSet rs) throws SQLException {
-                        user.setUserId(rs.getString("user_id"));
-                        user.setUsername(rs.getString("username"));
-                        user.setAge(rs.getInt("age"));
-                        user.setSex(rs.getInt("sex"));
-                    }
-                });
+				new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						user.setUserId(rs.getString("user_id"));
+						user.setUsername(rs.getString("username"));
+						user.setAge(rs.getInt("age"));
+						user.setSex(rs.getInt("sex"));
+					}
+        		});
 		return user;
 	}
 	
