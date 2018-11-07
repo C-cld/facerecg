@@ -24,13 +24,13 @@ public class UserDao {
 	 * @param userId
 	 * @return
 	 */
-	public User findUserById(final int userId) {
+	public User findUserById(final String userId) {
 		String sql = " select * from user where user_id = ? ";
 		final User user = new User();
 		jdbcTemplate.query(sql, new Object[]{userId},
                 new RowCallbackHandler() {
                     public void processRow(ResultSet rs) throws SQLException {
-                        user.setUserId(rs.getInt("user_id"));
+                        user.setUserId(rs.getString("user_id"));
                         user.setUsername(rs.getString("username"));
                         user.setAge(rs.getInt("age"));
                         user.setSex(rs.getInt("sex"));
@@ -43,7 +43,7 @@ public class UserDao {
 	 * 注册人入数据库
 	 * @param user
 	 */
-	public void registerUser(User user, int id) {
+	public void registerUser(User user, String id) {
 		String sql = " insert into user(user_id,username,age,sex) values (?,?,?,?) ";
 		jdbcTemplate.update(sql, new Object[] {id, user.getUsername(), user.getAge(), user.getSex()});
 	}

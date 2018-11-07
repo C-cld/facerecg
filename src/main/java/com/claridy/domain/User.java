@@ -1,17 +1,17 @@
 package com.claridy.domain;
 
 public class User {
-	private int userId;
+	private String userId;
 	private String username;
 	private int age;
 	private int sex;
 	private String beauty;
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

@@ -33,7 +33,7 @@ public class RegisterService {
 		Boolean flag = registerFace(base64Img, maxId+1);
 		if (flag) {
 			//往数据库中注册人脸
-			userDao.registerUser(user, maxId+1);
+			userDao.registerUser(user, String.valueOf(maxId+1));
 			return true;
 		} else {
 			return false;
@@ -58,7 +58,6 @@ public class RegisterService {
             String accessToken = AuthUtils.getAuth();
             String result = HttpUtil.post(url, accessToken, "application/json", param);
             
-            System.out.println("======" + result);
             JSONObject jsonObject = new JSONObject(result);
             JSONObject r_result = jsonObject.getJSONObject("result");
             if (r_result != null) {

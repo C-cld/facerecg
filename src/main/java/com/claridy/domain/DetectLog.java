@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class DetectLog {
 	private int logId;
-	private int userId;
+	private String userId;
 	private Date detectDate;
 
 	public int getLogId() {
@@ -15,11 +15,11 @@ public class DetectLog {
 		this.logId = logId;
 	}
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

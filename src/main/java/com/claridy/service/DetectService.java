@@ -62,7 +62,7 @@ public class DetectService {
 	/**
 	 * 在人脸库中查找人脸
 	 */
-	public int findUserIdInFaceSet(String base64Img) {
+	public String findUserIdInFaceSet(String base64Img) {
 		String url = "https://aip.baidubce.com/rest/2.0/face/v3/search";
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -75,40 +75,46 @@ public class DetectService {
             String accessToken = AuthUtils.getAuth();
             String result = HttpUtil.post(url, accessToken, "application/json", param);
             JSONObject jsonObject = new JSONObject(result);
-            JSONObject r_result = jsonObject.getJSONObject("result");
-            //匹配的用户列表
-            JSONArray ja = r_result.getJSONArray("user_list");
-            int userId = ja.getJSONObject(0).getInt("user_id");
-            //相似度大于80则认为匹配
-            Double score = ja.getJSONObject(0).getDouble("score");
-            int retval = score.compareTo(80.0);
-            if (retval >= 0) {
-            	return userId;
+            if (jsonObject.getInt("error_code") != 0) {
+            	//识别失败
+            	return null;
             } else {
-            	return 0;
+            	JSONObject r_result = jsonObject.getJSONObject("result");
+                //匹配的用户列表
+                JSONArray ja = r_result.getJSONArray("user_list");
+                String userId = ja.getJSONObject(0).getString("user_id");
+                //相似度大于80则认为匹配
+                Double score = ja.getJSONObject(0).getDouble("score");
+                int retval = score.compareTo(80.0);
+                if (retval >= 0) {
+                	return userId;
+                } else {
+                	return "0";
+                }
             }
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 0;
+			return null;
 		}
 	}
 	
 	public User findUser(String base64Img) {
-		int userId = findUserIdInFaceSet(base64Img);
+		String userId = findUserIdInFaceSet(base64Img);
 		//String beauty = detectFaceDetail(base64Img);
 		String beauty = "0";
 		//扫描记录放到log中
 		insertDetectLog(userId);
-		if (userId != 0 && beauty !=null) {
-			User user = userDao.findUserById(userId);
-			user.setBeauty(beauty);
-			return user;
-		} else if (userId == 0 && beauty != null) {//检测到人脸但是不在人脸库中
+
+		if (userId == null) { //没有检测到人脸
+			return null;
+		} else if (userId.equals("0") && beauty !=null) { //检测到人脸但是不在人脸库
 			User user = new User();
 			user.setBeauty(beauty);
 			return user;
 		} else {
-			return null;
+			User user = userDao.findUserById(userId);
+			user.setBeauty(beauty);
+			return user;
 		}
 	}
 	
@@ -116,9 +122,11 @@ public class DetectService {
 	 * 每扫描一次都添加日志记录
 	 * @param userId
 	 */
-	public void insertDetectLog(int userId) {
+	public void insertDetectLog(String userId) {
         DetectLog detectLog = new DetectLog();
-        detectLog.setUserId(userId);
+        if (userId != null) {
+        	detectLog.setUserId(userId);
+        }
         detectLog.setDetectDate(new Date());
         detectLogDao.insertDetectLog(detectLog);
 	}

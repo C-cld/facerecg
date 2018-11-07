@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <title>人脸识别</title>
-<script type="text/javascript" src="../js/tracking-min.js"></script>
-<script type="text/javascript" src="../js/face-min.js"></script>
+<script type="text/javascript" src="../facerecg/js/tracking-min.js"></script>
+<script type="text/javascript" src="../facerecg/js/face-min.js"></script>
 <script src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
 <style>
 .main {
@@ -130,16 +129,16 @@ table {
 							} else {
 								document.getElementById("sex").text = "女";
 							}
-								document.getElementById("age").text = data.user.age;
-								document.getElementById("beauty").text = data.user.beauty;
-							} else {//检测到人脸但是不在人脸库中
-								document.getElementById("username").text = "";
-								document.getElementById("sex").text = "";
-								document.getElementById("age").text = "";
-								document.getElementById("beauty").text = data.user.beauty;
-								document.getElementById("errorMsg").text = "人脸未注册。";
-							}
-						},
+							document.getElementById("age").text = data.user.age;
+							document.getElementById("beauty").text = data.user.beauty;
+						} else {//检测到人脸但是不在人脸库中
+							document.getElementById("username").text = "";
+							document.getElementById("sex").text = "";
+							document.getElementById("age").text = "";
+							document.getElementById("beauty").text = data.user.beauty;
+							document.getElementById("errorMsg").text = "人脸未注册。";
+						}
+					},
 					error : function(response) {
 					}
 				});
