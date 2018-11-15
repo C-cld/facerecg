@@ -1,4 +1,4 @@
-package com.claridy.domain;
+package com.cyy.domain;
 
 public class User {
 	private String userId;

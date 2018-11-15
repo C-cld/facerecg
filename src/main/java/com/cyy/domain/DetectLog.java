@@ -1,4 +1,4 @@
-package com.claridy.domain;
+package com.cyy.domain;
 
 import java.util.Date;
 

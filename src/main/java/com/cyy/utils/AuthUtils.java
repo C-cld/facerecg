@@ -1,4 +1,4 @@
-package com.claridy.utils;
+package com.cyy.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

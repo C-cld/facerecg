@@ -1,4 +1,4 @@
-package com.claridy.service;
+package com.cyy.service;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -9,13 +9,13 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.claridy.dao.DetectLogDao;
-import com.claridy.dao.UserDao;
-import com.claridy.domain.DetectLog;
-import com.claridy.domain.User;
-import com.claridy.utils.AuthUtils;
-import com.claridy.utils.GsonUtils;
-import com.claridy.utils.HttpUtil;
+import com.cyy.dao.DetectLogDao;
+import com.cyy.dao.UserDao;
+import com.cyy.domain.DetectLog;
+import com.cyy.domain.User;
+import com.cyy.utils.AuthUtils;
+import com.cyy.utils.GsonUtils;
+import com.cyy.utils.HttpUtil;
 
 @Service
 public class DetectService {

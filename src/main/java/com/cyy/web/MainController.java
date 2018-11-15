@@ -1,4 +1,4 @@
-package com.claridy.web;
+package com.cyy.web;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.claridy.domain.User;
-import com.claridy.service.DetectService;
-import com.claridy.service.RegisterService;
+import com.cyy.domain.User;
+import com.cyy.service.DetectService;
+import com.cyy.service.RegisterService;
 
 
 @RestController

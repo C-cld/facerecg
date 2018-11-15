@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2017 Baidu, Inc. All Rights Reserved.
  */
-package com.claridy.utils;
+package com.cyy.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

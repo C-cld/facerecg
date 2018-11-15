@@ -1,10 +1,10 @@
-package com.claridy.dao;
+package com.cyy.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.claridy.domain.DetectLog;
+import com.cyy.domain.DetectLog;
 
 @Repository
 public class DetectLogDao {
