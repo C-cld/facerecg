@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -23,7 +24,8 @@ public class AuthUtils {
 	public static String getAuth() {
 		try {
 			if (authDate != null) {
-				Date authDay = new Date(authDate);
+				DateFormat df = new SimpleDateFormat("EEE,dd MMM yyyy HH:mm:ss 'GMT'", Locale.ENGLISH);
+				Date authDay = df.parse(authDate);
 				Date today = new Date();
 				//当前日期超过token获取日期30天
 				if (today.getTime() - authDay.getTime() >= 2592000) {
